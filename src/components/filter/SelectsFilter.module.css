@@ -1,0 +1,22 @@
+.flex{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.inner_flex{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+}
+.select{
+    width: 200px;
+    height: 35px;
+}
+
+.btn{
+    height: 35px;
+    width: 120px;
+}

@@ -1,0 +1,24 @@
+/* gtc = general table card */
+
+.gtc{}
+.gtc_image{
+    width: 50px !important;
+    height: 50px;
+    background: #dbdbdb;
+    border-radius: var(--borderRadius);
+}
+.gtc_image img{
+    width: 50px !important;
+    height: 50px;
+    background: #dbdbdb;
+    border-radius: var(--borderRadius);
+}
+.gtc_title{
+    font-size: 13px;
+    color: var(--color_black_2);
+}
+.gtc_sub_title{
+    color: var(--color_black_1);
+    font-size: small;
+}
+
