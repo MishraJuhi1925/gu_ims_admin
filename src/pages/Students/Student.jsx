@@ -26,12 +26,12 @@ const Students = () => {
    const [query, setQuery] = useState('')
    const [downloading, setDownloading] = useState(false)
    const [queryObject, setQueryObject] = useState({
-     semester: '',
-     courseName: '',
-     programName: '',
-     marksUpdated:''
-   })
-  
+    semester: '',
+    courseName: '',
+    programName: '',
+    marksUpdated: '',
+    valueName: 'Theory'
+  })
 
    const paginationObject = {
      pageDetails,
@@ -55,6 +55,7 @@ const Students = () => {
      if (queryObject.marksUpdated) {
        params.append('marksUpdated', queryObject.marksUpdated);
      }
+     params.append('valueName', queryObject.valueName)
      return `student?${params.toString()}`;
    };
 
@@ -86,8 +87,8 @@ const Students = () => {
    }, [limit, page, query, queryObject])
 
    useEffect(() => {
-     setPage(1)
-   }, [query])
+    setPage(1)
+  }, [query,queryObject])
 
    function handleModal(){
      setStudent(this)
@@ -96,14 +97,16 @@ const Students = () => {
 
    const columns = studentColumn(handleModal)
 
-   const handleClear = () => {
-     setQueryObject({
-       semester: '',
-       courseName: '',
-       programName: '',
-       marksUpdated:''
-     })
-   }
+   
+  const handleClear = () => {
+    setQueryObject({
+      semester: '',
+      courseName: '',
+      programName: '',
+      marksUpdated: '',
+      valueName: 'Theory'
+    })
+  }
    const handleDownloadExcel = () => {
      setDownloading(true);
      getAllFilteredData((allData) => {
