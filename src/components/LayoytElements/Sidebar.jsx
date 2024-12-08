@@ -14,22 +14,22 @@ function Sidebar({ sidebar, handleSidebar }) {
 
     const linksArr = [
         {
+            key: '03',
+            icon: <PiStudent size={14} />,
+            label: 'Upload CSV',
+            link: '/csvupload'
+        },
+        {
             key: '01',
             icon: <FaSchool size={14} />,
             label: 'Colleges',
             link: '/college'
         },
         {
-            key: '05',
+            key: '02',
             icon: <PiStudent size={14} />,
             label: 'Students',
             link: '/student'
-        },
-        {
-            key: '05',
-            icon: <PiStudent size={14} />,
-            label: 'Upload Csv',
-            link: '/csvupload'
         },
     ]
 

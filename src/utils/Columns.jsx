@@ -814,25 +814,46 @@ export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCar
     width: 150
   },
   {
+    title: 'External Practical Marks',
+    key: 'externalPracticalMarks',
+    dataIndex: 'externalPracticalMarks',
+    align: 'center',
+    width: 250
+  },
+  {
     title: 'External Practical Total Marks',
     key: 'externalPracticalTotalMarks',
     dataIndex: 'externalPracticalTotalMarks',
     align: 'center',
-    width: 200
+    width: 250
+  },
+  {
+    title: 'Internal Practical Marks',
+    key: 'internalPracticalMarks',
+    dataIndex: 'internalPracticalMarks',
+    align: 'center',
+    width: 250
   },
   {
     title: 'Internal Practical Total Marks',
     key: 'internalPracticalTotalMarks',
     dataIndex: 'internalPracticalTotalMarks',
     align: 'center',
-    width: 200
+    width: 250
+  },
+  {
+    title: 'Internal Theory Marks',
+    key: 'internalTheoryMarks',
+    dataIndex: 'internalTheoryMarks',
+    align: 'center',
+    width: 250
   },
   {
     title: 'Internal Theory Total Marks',
     key: 'internalTheoryTotalMarks',
     dataIndex: 'internalTheoryTotalMarks',
     align: 'center',
-    width: 200
+    width: 250
   },
   {
     title: 'Value Name',
@@ -849,7 +870,7 @@ export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCar
     width: 200
   },
   {
-    title: 'Action',
+    title: 'Status',
     key: 'action',
     fixed: 'right',
     render: (_, { id, marksUpdated , valueName }) => (
@@ -857,8 +878,10 @@ export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCar
         {marksUpdated==='updated' ? <Tag color="green">
           Marks Updated
         </Tag> :
-          <Button type='default' shape="circle" onClick={handleEdit.bind({id,valueName})}><FaEdit size={16} /></Button>
-        }
+          <Tag color="yellow">
+          Pending
+        </Tag> 
+          }
       </Space>
     ),
     align: 'center',

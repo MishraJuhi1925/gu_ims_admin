@@ -119,8 +119,11 @@ const Students = () => {
          'Course ID': item.courseId,
          'Reference': item.reference,
          'Course Code': item.courseCode,
+         'External Practical Marks': item.externalPracticalMarks,
          'External Practical Total Marks': item.externalPracticalTotalMarks,
+         'Internal Practical Marks': item.internalPracticalTMarks,
          'Internal Practical Total Marks': item.internalPracticalTotalMarks,
+         'Internal Theory Marks': item.internalTheoryMarks,
          'Internal Theory Total Marks': item.internalTheoryTotalMarks,
          'Value Name': item.valueName,
          'Overall Total Marks': item.overallTotalMarks,
@@ -175,12 +178,12 @@ const Students = () => {
          <MyTable data={data} columns={columns} />
          <MyPagination {...paginationObject} />
        </div>
-       <UpdateMark 
+       {/* <UpdateMark 
          modalFunc={setModal} 
          modalValue={modal} 
          refreshFunc={getData} 
          student={student}
-       />
+       /> */}
      </>
    )
 }

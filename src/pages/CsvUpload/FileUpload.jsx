@@ -40,10 +40,7 @@ const FileUpload = ({ url, onUploadSuccess }) => {
 
   const draggerProps = {
     beforeUpload: (file) => {
-      console.log(file)
       setFileList([file]);
-      // handleUpload(file);
-
       return false;
     },
     fileList,
