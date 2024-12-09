@@ -20,8 +20,8 @@ const Header = ({ handleSidebar }) => {
             align='center'
             gap={20}
         >
-            <img src="/board.png" alt="logo" width={150} />
-
+            {/* <img src="/board.png" alt="logo" width={150} /> */}
+            <h1 className={classes.logo} src='/board.png' alt="" >University Logo</h1>
            <Flex
            gap={20}
            align='center'

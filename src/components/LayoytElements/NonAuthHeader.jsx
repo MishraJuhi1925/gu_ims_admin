@@ -11,7 +11,8 @@ const NonAuthHeader = () => {
     return (
         <React.Fragment>
             <Header className={classes.header}>
-                <img className={classes.logo} src='/board.png' alt="" />
+                {/* <img className={classes.logo} src='/board.png' alt="" /> */}
+                <h1 className={classes.logo} src='/board.png' alt="" >University Logo</h1>
                 <nav className={classes.header_nav}>
                     <>
                         <Button
