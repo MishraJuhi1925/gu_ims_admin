@@ -23,11 +23,11 @@ const FileUpload = ({ url, onUploadSuccess }) => {
         body: formData,
       },
       (result) => {
-        message.success(`${file.name} uploaded successfully!`);
-        onUploadSuccess && onUploadSuccess(result);
-        setFileList((prev) => prev.map((f) =>
-          f.uid === file.uid ? { ...f, uploaded: true } : f
-        ));
+        message.success(`Uploaded successfully!`);
+        // onUploadSuccess && onUploadSuccess(result);
+        // setFileList((prev) => prev.map((f) =>
+        //   f.uid === file.uid ? { ...f, uploaded: true } : f
+        // ));
       },
       true
     );
