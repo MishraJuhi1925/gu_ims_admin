@@ -35,6 +35,8 @@ const Schools = () => {
     marksUpdated:'',
     courseName:'',
     programName:'',
+    semester:'',
+    valueNameL:'Theory'
   })
 
   const constructUrl = (limit, page, query, queryObject) => {
@@ -208,6 +210,7 @@ const Schools = () => {
             </Button>
           </Space>
         </PageHeader>
+        {/* <SearchBar {...filterProps} /> */}
         <SearchAndFilter {...filterProps} />
         <h4 style={{ color: 'var(--color_black_2)', fontWeight: '500' }}>
           {pageDetails?.totalDocs ?? 0} Results</h4>
