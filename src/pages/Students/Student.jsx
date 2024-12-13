@@ -13,6 +13,8 @@ import SearchAndFilter from '../../components/filter/SearchAndFilter'
 import SelectsFilter from '../../components/filter/SelectsFilter'
 import UpdateMark from '../../components/modals/UpdateMark'
 import * as XLSX from 'xlsx'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const Students = () => {
    const { sendRequest, isLoading } = useHttp2()
@@ -25,6 +27,7 @@ const Students = () => {
    const [modal, setModal] = useState(false)
    const [query, setQuery] = useState('')
    const [downloading, setDownloading] = useState(false)
+   const [downloadType, setDownloadType] = useState(null)
    const [queryObject, setQueryObject] = useState({
     semester: '',
     courseName: '',
@@ -107,6 +110,50 @@ const Students = () => {
       valueName: 'Theory'
     })
   }
+
+  const handleDownloadPDF = () => {
+    setDownloading(true);
+    setDownloadType('pdf');
+    getAllFilteredData((allData) => {
+      const doc = new jsPDF('landscape');
+      doc.setFontSize(18);
+      doc.text('Students List', 14, 22);
+      const tableData = allData.map(item => [
+        item.examRollNumber,
+        item.programName,
+        item.courseName,
+        item.internalTheoryMarks,
+        item.externalPracticalMarks,
+        item.overallTotalMarks,
+        item.marksUpdated === 'updated' ? 'Updated' : 'Pending'
+      ]);
+      doc.autoTable({
+        startY: 30,
+        head: [['Exam Roll', 'Program', 'Course', 'Int Theory Marks', 'Ext Practical Marks', 'Total Marks', 'Status']],
+        body: tableData,
+        theme: 'striped',
+        styles: { 
+          fontSize: 8,
+          cellPadding: 2 
+        },
+        columnStyles: { 
+          0: { cellWidth: 30 },
+          1: { cellWidth: 40 },
+          2: { cellWidth: 40 },
+          3: { cellWidth: 30 },
+          4: { cellWidth: 30 },
+          5: { cellWidth: 30 },
+          6: { cellWidth: 30 }
+        }
+      });
+ 
+      doc.save(`Students_${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      setDownloading(false);
+      setDownloadType(null);
+    });
+  }
+
    const handleDownloadExcel = () => {
      setDownloading(true);
      getAllFilteredData((allData) => {
@@ -159,6 +206,15 @@ const Students = () => {
                loading={downloading}
              >
                Export Excel
+             </Button>
+             <Button 
+               onClick={handleDownloadPDF} 
+               style={{height:35}} 
+               type='primary' 
+               icon={<FaDownload />}
+               loading={downloading && downloadType === 'pdf'}
+             >
+               Export PDF
              </Button>
            </Space>
          </PageHeader>

@@ -13,6 +13,8 @@ import { toast } from 'react-toastify'
 import Cookies from 'js-cookie'
 import { BASE_API } from '../../utils/BASE_URL'
 import * as XLSX from 'xlsx'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const Schools = () => {
   const {collegeName} =useParams()
@@ -28,6 +30,7 @@ const Schools = () => {
   const navigation = useNavigate()
   const combinedData = [...data, ...data1];
   const [downloading, setDownloading] = useState(false)
+  const [downloadType, setDownloadType] = useState(null)
   const [queryObject,setQueryObject]=useState({
     marksUpdated:'',
     courseName:'',
@@ -76,6 +79,48 @@ const Schools = () => {
       XLSX.utils.book_append_sheet(workbook, worksheet, "Colleges");
       XLSX.writeFile(workbook, `Colleges_${new Date().toISOString().split('T')[0]}.xlsx`);
       setDownloading(false);
+    });
+  }
+
+  const handleDownloadPDF = () => {
+    setDownloading(true);
+    setDownloadType('pdf');
+    getAllFilteredData((allData) => {
+      const doc = new jsPDF();
+      
+      // Add title
+      doc.setFontSize(18);
+      doc.text('Colleges List', 14, 22);
+      
+      // Prepare table data
+      const tableData = allData.map(item => [
+        item.name, 
+        item.email, 
+        item.totalStudents ? item.totalStudents.toString() : 'N/A'
+      ]);
+
+      // Create table
+      doc.autoTable({
+        startY: 30,
+        head: [['College Name', 'Email', 'Total Students']],
+        body: tableData,
+        theme: 'striped',
+        styles: { 
+          fontSize: 8,
+          cellPadding: 2 
+        },
+        columnStyles: { 
+          0: { cellWidth: 40 },
+          1: { cellWidth: 70 },
+          2: { cellWidth: 40 }
+        }
+      });
+
+      // Save PDF
+      doc.save(`Colleges_${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      setDownloading(false);
+      setDownloadType(null);
     });
   }
 
@@ -156,6 +201,14 @@ const Schools = () => {
               loading={downloading}
             >
               Export Excel
+            </Button>
+            <Button 
+              onClick={handleDownloadPDF} 
+              icon={<FaDownload />} 
+              type='primary'
+              loading={downloading && downloadType === 'pdf'}
+            >
+              Export PDF
             </Button>
           </Space>
         </PageHeader>
