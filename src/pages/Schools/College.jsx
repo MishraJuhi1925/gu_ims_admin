@@ -98,8 +98,6 @@ const Schools = () => {
         item.email, 
         item.totalStudents ? item.totalStudents.toString() : 'N/A'
       ]);
-
-      // Create table
       doc.autoTable({
         startY: 30,
         head: [['College Name', 'Email', 'Total Students']],
@@ -115,8 +113,6 @@ const Schools = () => {
           2: { cellWidth: 40 }
         }
       });
-
-      // Save PDF
       doc.save(`Colleges_${new Date().toISOString().split('T')[0]}.pdf`);
       
       setDownloading(false);
