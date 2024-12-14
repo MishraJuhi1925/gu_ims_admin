@@ -1064,6 +1064,7 @@ export const collegeColumn = (handleView, handleDelete, viewStudents) => ([
   },  
  
   { title: 'Total Students', key: 'totalStudents', dataIndex: 'totalStudents', align: 'center' },
+  
   {
      title: 'View Students',
       key: 'view_students',

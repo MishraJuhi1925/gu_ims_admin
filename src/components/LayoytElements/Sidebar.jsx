@@ -31,6 +31,12 @@ function Sidebar({ sidebar, handleSidebar }) {
             label: 'Students',
             link: '/student'
         },
+        {
+            key: '03',
+            icon: <PiStudent size={14} />,
+            label: 'Update Marks',
+            link: '/update-students'
+        },
     ]
 
     const cssObject = sidebar ? { left: '0' } : {}

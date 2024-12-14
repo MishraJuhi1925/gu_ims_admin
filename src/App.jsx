@@ -9,6 +9,7 @@ import Schools from './pages/Schools/College'
 import Students from './pages/Students/Student'
 import StudentByCollege from './pages/Students/StudentByCollege'
 import FileUpload from './pages/CsvUpload/FileUpload'
+import ReqStudent from './pages/Students/ReqStudent'
 
 
 const someLinks = ['/login', '/signup', '/forget', '/admin_login/:resetToken']
@@ -35,6 +36,9 @@ function App() {
           :
           <LayoutFile>
             <Routes>
+            <Route path='/update-students'  >
+                <Route index element={<ReqStudent />} />
+                </Route>
               <Route path='/college'  >
                 <Route index element={<Schools />} />
                 <Route path='/college/college/:collegeName' element={<StudentByCollege />} />

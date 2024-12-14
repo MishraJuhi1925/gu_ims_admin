@@ -1,18 +1,32 @@
-.flex{
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+.grid{
+    display: grid;
+    grid-template-areas:
+    "one one"
+    "two three"
+    "four five";
+    gap: 20px;
 }
-.inner_flex{
-    display: flex;
-    align-items: center;
-    column-gap: 10px;
 
+.grid > div:nth-child(1){
+    grid-area:one;
 }
+.grid > div:nth-child(2){
+    grid-area: two;
+}
+.grid > div:nth-child(3){
+    grid-area: three;
+}
+.grid > div:nth-child(4){
+    grid-area: four;
+}
+.grid > div:nth-child(5){
+    grid-area: five;
+}
+/* .grid > div:nth-child(6){
+    grid-area: "six";
+} */
+
 .select{
-    width: 200px;
     height: 35px;
 }
 

@@ -170,6 +170,11 @@ const Schools = () => {
     setPage(1)
   }, [query, date])
 
+  // useEffect(() => {
+  //   console.log('satus mark.................')
+  //   getupdatecount()
+  // }, [])
+
   const handleDelete = (id) => {
     sendRequest({
       url: `center/${id}`,
@@ -178,6 +183,16 @@ const Schools = () => {
       getData()
     }, true)
   }
+  const getupdatecount = (collegeName, callback) => {
+    sendRequest({
+      url: `/marks_status_by_college?collegeName=${encodeURIComponent(collegeName)}`
+    }, result => {
+      if (callback) {
+        callback(result);
+      }
+      console.log(result.data);
+    });
+  };
   
   const columns = collegeColumn((id) => navigate(`edit/${id}`), handleDelete, (collegeName) => navigate(`/college/college/${collegeName}`))
   

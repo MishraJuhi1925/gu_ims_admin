@@ -1,0 +1,28 @@
+.selectFilter{
+    background: white;
+    padding: 30px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    row-gap: 20px;
+    }
+
+    .selectFilter_icons{
+        margin-inline: auto;
+        font-size: 25px;
+        color: rgb(82, 82, 82);
+    }
+    
+    .selectFilter h1 {
+    font-size: 23px;
+    font-weight: 600;
+    color: rgb(69, 66, 66);
+    }
+    
+    .selectFilter p {
+    font-size: 17px;
+    color: rgb(107, 102, 102);
+    }
