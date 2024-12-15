@@ -68,28 +68,19 @@ const SpecialFilter = ({ queryObject, setQueryObject, handleClear }) => {
     return (
         <div className={classes.grid}>
 
-                <Select
-                    className={classes.select}
-                    onSelect={(value) => handleSelect('valueName', value)}
-                    placeholder='Subject Type'
-                    value={queryObject.valueName}
-                    options={[
-                        { value: 'Theory', label: 'Theory' },
-                        { value: 'Only External', label: 'Only External' },
-                        { value: 'Practical', label: 'Practical' },
-                    ]}
-                />
-            {/* <Select
-                    className={classes.select}
-                    onSelect={(value) => handleSelect('marksUpdated', value)}
-                    placeholder='Marks Status'
-                    value={queryObject.marksUpdated}
-                    options={[
-                        {value:'', label:'Marks Status'},
-                        { value: 'updated', label: 'Updated' },
-                        { value: 'not updated', label: 'Not Updated' },
-                    ]}
-                /> */}
+                
+<Select
+                className={classes.select}
+                showSearch
+                filterOption={false}
+                onSelect={(value) => handleSelect('collegeName', value)}
+                onSearch={getCollege}
+                placeholder='Select College'
+                value={queryObject.collegeName}
+                options={[{value:'', label:'Select College'},...colleges]}
+                notFoundContent={collegeLoading ? <Spin size="small" /> : null}
+            />
+                    
                 <Select
                     className={classes.select}
                     showSearch
@@ -114,17 +105,6 @@ const SpecialFilter = ({ queryObject, setQueryObject, handleClear }) => {
                 />
                 <Select
                     className={classes.select}
-                    showSearch
-                    filterOption={false}
-                    onSelect={(value) => handleSelect('collegeName', value)}
-                    onSearch={getCollege}
-                    placeholder='Select College'
-                    value={queryObject.collegeName }
-                    options={[{value:'',label:'Select College'},...colleges]}
-                    notFoundContent={collegeLoading ? <Spin size="small" /> : null}
-                />
-                <Select
-                    className={classes.select}
                     onSelect={(value) => handleSelect('semester', value)}
                     placeholder='Select Semester'
                     value={queryObject.semester}
@@ -138,6 +118,19 @@ const SpecialFilter = ({ queryObject, setQueryObject, handleClear }) => {
                         { value: '6', label: 'Semester 6' },
                     ]}
                 />
+                <Select
+                    className={classes.select}
+                    onSelect={(value) => handleSelect('valueName', value)}
+                    placeholder='Subject Type'
+                    value={queryObject.valueName}
+                    options={[
+                        { value: '', label: 'Subject Type' },
+                        { value: 'Theory', label: 'Theory' },
+                        { value: 'Practical(only external)', label: 'Practical(only external)' },
+                        { value: 'Practical', label: 'Practical' },
+                    ]}
+                />
+                
         </div>
     )
 }

@@ -70,7 +70,9 @@ const Schools = () => {
         'College Name': item.name,
         'Email': item.email,
         'Total Students': item.totalStudents,
-        
+        'Total Results':item.totalResults,
+        'Total Updated Results':item.totalUpdatedResults,
+        'Total Pending Results':Number(item.totalResults) - Number(item.totalUpdatedResults)
         
       }));
       const worksheet = XLSX.utils.json_to_sheet(excelData);
@@ -95,11 +97,14 @@ const Schools = () => {
       const tableData = allData.map(item => [
         item.name, 
         item.email, 
-        item.totalStudents ? item.totalStudents.toString() : 'N/A'
+        item.totalStudents ? item.totalStudents.toString() : 'N/A',
+        item.totalResults,
+        item.totalUpdatedResults,
+        Number(item.totalResults) - Number(item.totalUpdatedResults)
       ]);
       doc.autoTable({
         startY: 30,
-        head: [['College Name', 'Email', 'Total Students']],
+        head: [['College Name', 'Email', 'Total Students' , 'Total Results' , 'Updated Results' , 'Pending Results']],
         body: tableData,
         theme: 'striped',
         styles: { 
@@ -109,7 +114,10 @@ const Schools = () => {
         columnStyles: { 
           0: { cellWidth: 40 },
           1: { cellWidth: 70 },
-          2: { cellWidth: 40 }
+          2: { cellWidth: 40 },
+          3: { cellWidth: 40 },
+          4: { cellWidth: 40 },
+          5: { cellWidth: 40 },
         }
       });
       doc.save(`Colleges_${new Date().toISOString().split('T')[0]}.pdf`);

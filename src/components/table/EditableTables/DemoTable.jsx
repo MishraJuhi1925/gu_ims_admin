@@ -88,8 +88,8 @@ const DemoTable = ({data, setData}) => {
                 <div className={classes.grid_th}>Course Code</div>
                 <div className={classes.grid_th}>Internal Theory Marks</div>
                 <div className={classes.grid_th}>Value Name</div>
-                <div className={classes.grid_th}>Overall Total Marks</div>
-                <div className={classes.grid_th}>Action</div>
+                <div className={classes.grid_th}>Remark</div>
+                <div className={classes.grid_th}>Status</div>
 
                 {data.map((element, index) => (
                     <React.Fragment key={element.id}>
@@ -110,32 +110,22 @@ const DemoTable = ({data, setData}) => {
                         <div className={classes.grid_td}>{element.reference}</div>
                         <div className={classes.grid_td}>{element.courseCode}</div>
                         <div className={classes.grid_td}>
-                            <Form.Item
-                                style={{ marginBottom: 0 }}
-                                name={`input_${element.id}_internalTheoryMarks`}
-                                rules={[
-                                    { required: true, message: 'Required' },
-                                    { validator: validateMarks }
-                                ]}
-                            >
-                                <Input
-                                    ref={el => inputRefs.current[index] = el}
-                                    type="text"
-                                    maxLength={5}
-                                    value={element.internalTheoryMarks}
-                                    onChange={(e) => handleInputChange(e.target.value, element.id)}
-                                    onKeyPress={(e) => handleKeyPress(e, element.id, 'internalTheoryMarks', index)}
-                                />
-                            </Form.Item>
+                            {element.internalTheoryMarks}
                         </div>
                         <div className={classes.grid_td}>{element.valueName}</div>
-                        <div className={classes.grid_td}>{element.overallTotalMarks}</div>
+                        <div className={classes.grid_td}>{element.remark}</div>
                         <div className={classes.grid_td}>
-                            <Space>
-                        {
-                                    <Button type='default' shape="circle" onClick={() => formLogic(element.id, 'internalTheoryMarks', index)}><FaCheck color={element.marksUpdated==='updated' ? 'color(srgb 0.7203 0.9194 0.5613)':'color(srgb 0.8705 0.8706 0.8707)'} size={16} /></Button>
-                                }
-                            </Space>
+                        <Space>
+        {element.marksUpdated === 'updated' ? <Tag color="green">
+          Marks Updated
+        </Tag> : element.marksUpdated === 'modified' ? <Tag color="blue">
+          Modified
+        </Tag> : <Tag color="yellow">
+          Pending
+        </Tag>
+          
+        }
+      </Space>
                         </div>
                     </React.Fragment>
                 ))}

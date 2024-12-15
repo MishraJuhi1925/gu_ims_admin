@@ -26,10 +26,11 @@ const ReqStudent = () => {
 
   const [queryObject, setQueryObject] = useState({
     semester: '',
+    collegeName: '',
     courseName: '',
     programName: '',
     marksUpdated: '',
-    valueName: 'Theory',
+    valueName: '',
     specialCase: 'Only External',
     filter: false
   })
@@ -45,6 +46,9 @@ const ReqStudent = () => {
   const constructUrl = (limit, page, query, queryObject) => {
 
     const params = new URLSearchParams({ limit, page, search: query });
+    if (queryObject.collegeName) {
+      params.append('collegeName', queryObject.collegeName);
+    }
     if (queryObject.courseName) {
       params.append('courseName', queryObject.courseName);
     }
@@ -57,9 +61,10 @@ const ReqStudent = () => {
     if (queryObject.collegeName) {
         params.append('collegeName', queryObject.collegeName);
     }
-    
+    if (queryObject.valueName) {
+      params.append('valueName', queryObject.valueName)
+    }
     params.append('marksUpdated', 'updated');
-    params.append('valueName', queryObject.valueName)
 
     return `modified-student?${params.toString()}`;
   };
@@ -80,9 +85,12 @@ const ReqStudent = () => {
     if (queryObject.collegeName) {
         params.append('collegeName', queryObject.collegeName);
     }
+
+    if (queryObject.valueName) {
+      params.append('valueName', queryObject.valueName)
+    }
     
     params.append('marksUpdated', 'updated');
-    params.append('valueName', queryObject.valueName)
 
     return `update_modified?${params.toString()}`;
   };
@@ -117,9 +125,9 @@ const ReqStudent = () => {
   }, [query])
 
   const handleFilter = () => {
-    const { courseName, programName, semester, valueName } = queryObject
-    if (!courseName || !programName || !semester || !valueName) {
-      toast.error('Please Select program, course name, semester, and subject type')
+    const { courseName, programName, semester, valueName , collegeName } = queryObject
+    if (!courseName || !programName || !semester || !valueName || !collegeName) {
+      toast.error('Please Select college name,program, course name, semester, and subject type')
       return
     }
     setQueryObject(prev => ({ ...prev, filter: true }))
@@ -132,15 +140,15 @@ const ReqStudent = () => {
       courseName: '',
       programName: '',
       marksUpdated: '',
-      valueName: 'Theory',
-      specialCase: 'only external',
+      valueName: '',
+      collegeName:'',
       filter: false
     })
   }
 
   const renderComp = {
     'Theory': <DemoTable data={data} setData={setData} />,
-    'Only External': <ExternalMarks data={data} setData={setData} />,
+    'Practical (only external)': <ExternalMarks data={data} setData={setData} />,
     'Practical': <PracticalStudentsTable data={data} setData={setData} />
   }
 

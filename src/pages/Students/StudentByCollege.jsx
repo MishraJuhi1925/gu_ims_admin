@@ -84,7 +84,7 @@ const StudentByCollege = () => {
     })
   }
   
-  
+
   useEffect(() => {
     getData()
   }, [limit, page, query , queryObject])
@@ -93,7 +93,7 @@ const StudentByCollege = () => {
     setPage(1)
   }, [query])
 
-  const columns = studentColumn((id) => navigate(`edit/${id}`), id => navigate(`view/${id}`))
+  const columns = studentColumn()
 
   const handleClear = () => {
     setQueryObject({

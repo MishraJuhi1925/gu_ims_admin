@@ -761,6 +761,21 @@ export const studentColumn = () => ([
     width: 100
   },
   {
+    title: 'College Name',
+    key: 'collegeName',
+    dataIndex: 'collegeName',
+    align: 'center',
+    ellipsis: {
+      showTitle: false,
+    },
+    render: (collegeName) => (
+      <Tooltip placement="topLeft" title={collegeName}>
+        {collegeName}
+      </Tooltip>
+    ),
+    width: 300
+  },
+  {
     title: 'Program Name',
     key: 'programName',
     dataIndex: 'programName',
@@ -866,156 +881,6 @@ export const studentColumn = () => ([
     width: 150
   }
 ]);
-
-// export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCard) => ([
-//   {
-//     title: 'Exam Roll Number',
-//     key: 'examRollNumber',
-//     dataIndex: 'examRollNumber',
-//     align: 'center',
-//     fixed: 'left',
-//     width: 200
-//   },
-//   {
-//     title: 'Civil ID',
-//     key: 'civilId',
-//     dataIndex: 'civilId',
-//     align: 'center',
-//     width: 150
-//   },
-//   {
-//     title: 'Semester',
-//     key: 'semester',
-//     dataIndex: 'semester',
-//     align: 'center',
-//     width: 100
-//   },
-//   {
-//     title: 'Program Name',
-//     key: 'programName',
-//     dataIndex: 'programName',
-//     align: 'center',
-//     ellipsis: {
-//       showTitle: false,
-//     },
-//     render: (programName) => (
-//       <Tooltip placement="topLeft" title={programName}>
-//         {programName}
-//       </Tooltip>
-//     ),
-//     width: 300
-//   },
-//   {
-//     title: 'Course Name',
-//     key: 'courseName',
-//     dataIndex: 'courseName',
-//     align: 'center',
-//     ellipsis: {
-//       showTitle: false,
-//     },
-//     render: (courseName) => (
-//       <Tooltip placement="topLeft" title={courseName}>
-//         {courseName}
-//       </Tooltip>
-//     ),
-//     width: 300
-//   },
-//   {
-//     title: 'Course ID',
-//     key: 'courseId',
-//     dataIndex: 'courseId',
-//     align: 'center',
-//     width: 150
-//   },
-//   {
-//     title: 'Reference',
-//     key: 'reference',
-//     dataIndex: 'reference',
-//     align: 'center',
-//     width: 150
-//   },
-//   {
-//     title: 'Course Code',
-//     key: 'courseCode',
-//     dataIndex: 'courseCode',
-//     align: 'center',
-//     width: 150
-//   },
-//   {
-//     title: 'External Practical Marks',
-//     key: 'externalPracticalMarks',
-//     dataIndex: 'externalPracticalMarks',
-//     align: 'center',
-//     width: 250
-//   },
-//   {
-//     title: 'External Practical Total Marks',
-//     key: 'externalPracticalTotalMarks',
-//     dataIndex: 'externalPracticalTotalMarks',
-//     align: 'center',
-//     width: 250
-//   },
-//   {
-//     title: 'Internal Practical Marks',
-//     key: 'internalPracticalMarks',
-//     dataIndex: 'internalPracticalMarks',
-//     align: 'center',
-//     width: 250
-//   },
-//   {
-//     title: 'Internal Practical Total Marks',
-//     key: 'internalPracticalTotalMarks',
-//     dataIndex: 'internalPracticalTotalMarks',
-//     align: 'center',
-//     width: 250
-//   },
-//   {
-//     title: 'Internal Theory Marks',
-//     key: 'internalTheoryMarks',
-//     dataIndex: 'internalTheoryMarks',
-//     align: 'center',
-//     width: 250
-//   },
-//   {
-//     title: 'Internal Theory Total Marks',
-//     key: 'internalTheoryTotalMarks',
-//     dataIndex: 'internalTheoryTotalMarks',
-//     align: 'center',
-//     width: 250
-//   },
-//   {
-//     title: 'Value Name',
-//     key: 'valueName',
-//     dataIndex: 'valueName',
-//     align: 'center',
-//     width: 150
-//   },
-//   {
-//     title: 'Overall Total Marks',
-//     key: 'overallTotalMarks',
-//     dataIndex: 'overallTotalMarks',
-//     align: 'center',
-//     width: 200
-//   },
-//   {
-//     title: 'Status',
-//     key: 'action',
-//     fixed: 'right',
-//     render: (_, { id, marksUpdated , valueName }) => (
-//       <Space>
-//         {marksUpdated==='updated' ? <Tag color="green">
-//           Marks Updated
-//         </Tag> :
-//           <Tag color="yellow">
-//           Pending
-//         </Tag> 
-//           }
-//       </Space>
-//     ),
-//     align: 'center',
-//     width: 150
-//   }
-// ]);
 
 export const studentPracticalColumn = (handleEdit) => ([
   {
@@ -1173,8 +1038,6 @@ export const supportColumn = (handleView) => ([
     align: 'center',
   }
 ])
-
-
 
 export const collegeColumn = (handleView, handleDelete, viewStudents) => ([  
   {  
