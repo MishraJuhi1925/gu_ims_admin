@@ -32,6 +32,8 @@ const StudentByCollege = () => {
     marksUpdated:'',
     courseName:'',
     programName:'',
+    valueName:'',
+
   })
 
   const filterProps = {
@@ -53,13 +55,19 @@ const StudentByCollege = () => {
   const constructUrl = (limit, page, query, queryObject) => {
     const params = new URLSearchParams({ limit, page, search: query });
     if (queryObject.courseName) {
-        params.append('courseName', queryObject.courseName);
-    }
-    if (queryObject.programName) {
-        params.append('programName', queryObject.programName);
-    }
-    if (queryObject.semester) {
-        params.append('semester', Number(queryObject.semester));
+       params.append('courseName', queryObject.courseName);
+     }
+     if (queryObject.programName) {
+       params.append('programName', queryObject.programName);
+     }
+     if (queryObject.semester) {
+       params.append('semester', Number(queryObject.semester));
+     }
+     if (queryObject.marksUpdated) {
+       params.append('marksUpdated', queryObject.marksUpdated);
+     }
+     if (queryObject.valueName) {
+       params.append('valueName', queryObject.valueName)
     }
     return `student/by_college/${collegeName}?${params.toString()}`;
 };
@@ -75,15 +83,8 @@ const StudentByCollege = () => {
       setPageDetails({ ...result.data, docs: [] })
     })
   }
-  const handleDelete = (id) => {
-    sendRequest({
-      url: `students/${id}`,
-      method: 'DELETE'
-    }, result => {
-      getData()
-    }, true)
-  }
- 
+  
+  
   useEffect(() => {
     getData()
   }, [limit, page, query , queryObject])
@@ -93,6 +94,16 @@ const StudentByCollege = () => {
   }, [query])
 
   const columns = studentColumn((id) => navigate(`edit/${id}`), id => navigate(`view/${id}`))
+
+  const handleClear = () => {
+    setQueryObject({
+      semester: '',
+      courseName: '',
+      programName: '',
+      marksUpdated: '',
+      valueName: ''
+    })
+  }
 
   return (
     <>
@@ -105,8 +116,9 @@ const StudentByCollege = () => {
       >
         <PageHeader heading={'Students List'} >
           <Space>
-            {/* <Button onClick={downloadExcelFile} disabled={dataDownloadLoading} icon={<FaDownload />} type='default'>Download Data</Button> */}
-            <Button onClick={() => navigate('add')} type='primary' icon={<FaPlus />}  >Add Student</Button>
+          <Button onClick={handleClear} style={{height:35,width:100}} type='default'>
+               Clear Filter
+             </Button>
           </Space>
         </PageHeader>
         <SelectsFilter setQueryObject={setQueryObject} queryObject={queryObject} />

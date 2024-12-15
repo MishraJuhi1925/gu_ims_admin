@@ -737,9 +737,7 @@ export const schoolColumn = (handleView,handleDelete,viewStudents) => ([
   }
 ])
 
-
-
-export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCard) => ([
+export const studentColumn = () => ([
   {
     title: 'Exam Roll Number',
     key: 'examRollNumber',
@@ -814,46 +812,31 @@ export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCar
     width: 150
   },
   {
-    title: 'External Practical Marks',
-    key: 'externalPracticalMarks',
-    dataIndex: 'externalPracticalMarks',
+    title: 'Internal Theory Marks',
+    key: 'internalTheoryMarks',
     align: 'center',
-    width: 250
-  },
-  {
-    title: 'External Practical Total Marks',
-    key: 'externalPracticalTotalMarks',
-    dataIndex: 'externalPracticalTotalMarks',
-    align: 'center',
-    width: 250
+    render:({_,internalTheoryMarks})=>(
+      internalTheoryMarks === '' ? '--' : internalTheoryMarks
+    ),
+    width: 200
   },
   {
     title: 'Internal Practical Marks',
     key: 'internalPracticalMarks',
-    dataIndex: 'internalPracticalMarks',
     align: 'center',
-    width: 250
+    render:({_,internalPracticalMarks})=>(
+      internalPracticalMarks === '' ? '--' : internalPracticalMarks
+    ),
+    width: 200
   },
   {
-    title: 'Internal Practical Total Marks',
-    key: 'internalPracticalTotalMarks',
-    dataIndex: 'internalPracticalTotalMarks',
+    title: 'External Practical Marks',
+    key: 'externalracticalMarks',
     align: 'center',
-    width: 250
-  },
-  {
-    title: 'Internal Theory Marks',
-    key: 'internalTheoryMarks',
-    dataIndex: 'internalTheoryMarks',
-    align: 'center',
-    width: 250
-  },
-  {
-    title: 'Internal Theory Total Marks',
-    key: 'internalTheoryTotalMarks',
-    dataIndex: 'internalTheoryTotalMarks',
-    align: 'center',
-    width: 250
+    render:({_,externalPracticalMarks})=>(
+    externalPracticalMarks === '' ? '--' :externalPracticalMarks
+    ),
+    width: 200
   },
   {
     title: 'Value Name',
@@ -863,31 +846,176 @@ export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCar
     width: 150
   },
   {
-    title: 'Overall Total Marks',
-    key: 'overallTotalMarks',
-    dataIndex: 'overallTotalMarks',
-    align: 'center',
-    width: 200
-  },
-  {
-    title: 'Status',
+    title: 'Staus',
     key: 'action',
     fixed: 'right',
-    render: (_, { id, marksUpdated , valueName }) => (
+    render: (_, { id, marksUpdated, valueName }) => (
       <Space>
-        {marksUpdated==='updated' ? <Tag color="green">
+        {marksUpdated === 'updated' ? <Tag color="green">
           Marks Updated
-        </Tag> :
-          <Tag color="yellow">
+        </Tag> : marksUpdated === 'modified' ? <Tag color="blue">
+          Modified
+        </Tag> : <Tag color="yellow">
           Pending
-        </Tag> 
-          }
+        </Tag>
+          
+        }
       </Space>
     ),
     align: 'center',
     width: 150
   }
 ]);
+
+// export const studentColumn = (handleEdit, handleDelete, handleView, viewAdmitCard) => ([
+//   {
+//     title: 'Exam Roll Number',
+//     key: 'examRollNumber',
+//     dataIndex: 'examRollNumber',
+//     align: 'center',
+//     fixed: 'left',
+//     width: 200
+//   },
+//   {
+//     title: 'Civil ID',
+//     key: 'civilId',
+//     dataIndex: 'civilId',
+//     align: 'center',
+//     width: 150
+//   },
+//   {
+//     title: 'Semester',
+//     key: 'semester',
+//     dataIndex: 'semester',
+//     align: 'center',
+//     width: 100
+//   },
+//   {
+//     title: 'Program Name',
+//     key: 'programName',
+//     dataIndex: 'programName',
+//     align: 'center',
+//     ellipsis: {
+//       showTitle: false,
+//     },
+//     render: (programName) => (
+//       <Tooltip placement="topLeft" title={programName}>
+//         {programName}
+//       </Tooltip>
+//     ),
+//     width: 300
+//   },
+//   {
+//     title: 'Course Name',
+//     key: 'courseName',
+//     dataIndex: 'courseName',
+//     align: 'center',
+//     ellipsis: {
+//       showTitle: false,
+//     },
+//     render: (courseName) => (
+//       <Tooltip placement="topLeft" title={courseName}>
+//         {courseName}
+//       </Tooltip>
+//     ),
+//     width: 300
+//   },
+//   {
+//     title: 'Course ID',
+//     key: 'courseId',
+//     dataIndex: 'courseId',
+//     align: 'center',
+//     width: 150
+//   },
+//   {
+//     title: 'Reference',
+//     key: 'reference',
+//     dataIndex: 'reference',
+//     align: 'center',
+//     width: 150
+//   },
+//   {
+//     title: 'Course Code',
+//     key: 'courseCode',
+//     dataIndex: 'courseCode',
+//     align: 'center',
+//     width: 150
+//   },
+//   {
+//     title: 'External Practical Marks',
+//     key: 'externalPracticalMarks',
+//     dataIndex: 'externalPracticalMarks',
+//     align: 'center',
+//     width: 250
+//   },
+//   {
+//     title: 'External Practical Total Marks',
+//     key: 'externalPracticalTotalMarks',
+//     dataIndex: 'externalPracticalTotalMarks',
+//     align: 'center',
+//     width: 250
+//   },
+//   {
+//     title: 'Internal Practical Marks',
+//     key: 'internalPracticalMarks',
+//     dataIndex: 'internalPracticalMarks',
+//     align: 'center',
+//     width: 250
+//   },
+//   {
+//     title: 'Internal Practical Total Marks',
+//     key: 'internalPracticalTotalMarks',
+//     dataIndex: 'internalPracticalTotalMarks',
+//     align: 'center',
+//     width: 250
+//   },
+//   {
+//     title: 'Internal Theory Marks',
+//     key: 'internalTheoryMarks',
+//     dataIndex: 'internalTheoryMarks',
+//     align: 'center',
+//     width: 250
+//   },
+//   {
+//     title: 'Internal Theory Total Marks',
+//     key: 'internalTheoryTotalMarks',
+//     dataIndex: 'internalTheoryTotalMarks',
+//     align: 'center',
+//     width: 250
+//   },
+//   {
+//     title: 'Value Name',
+//     key: 'valueName',
+//     dataIndex: 'valueName',
+//     align: 'center',
+//     width: 150
+//   },
+//   {
+//     title: 'Overall Total Marks',
+//     key: 'overallTotalMarks',
+//     dataIndex: 'overallTotalMarks',
+//     align: 'center',
+//     width: 200
+//   },
+//   {
+//     title: 'Status',
+//     key: 'action',
+//     fixed: 'right',
+//     render: (_, { id, marksUpdated , valueName }) => (
+//       <Space>
+//         {marksUpdated==='updated' ? <Tag color="green">
+//           Marks Updated
+//         </Tag> :
+//           <Tag color="yellow">
+//           Pending
+//         </Tag> 
+//           }
+//       </Space>
+//     ),
+//     align: 'center',
+//     width: 150
+//   }
+// ]);
 
 export const studentPracticalColumn = (handleEdit) => ([
   {
@@ -1064,6 +1192,13 @@ export const collegeColumn = (handleView, handleDelete, viewStudents) => ([
   },  
  
   { title: 'Total Students', key: 'totalStudents', dataIndex: 'totalStudents', align: 'center' },
+  { title: 'Total Results', key: 'totalResults', dataIndex: 'totalResults', align: 'center' },
+  { title: 'Updated Results', key: 'totalUpdatedResults', dataIndex: 'totalUpdatedResults', align: 'center' },
+  { title: 'Pending Results',
+     align: 'center',
+
+    render:(_,{totalResults,totalUpdatedResults})=>(<p style={{color:'red'}}>{Number(totalResults || 0)-Number(totalUpdatedResults ||0)}</p>)
+   },
   
   {
      title: 'View Students',

@@ -58,8 +58,10 @@ const Students = () => {
      if (queryObject.marksUpdated) {
        params.append('marksUpdated', queryObject.marksUpdated);
      }
-     params.append('valueName', queryObject.valueName)
-     return `student?${params.toString()}`;
+     if (queryObject.valueName) {
+       params.append('valueName', queryObject.valueName)
+    }
+    return `student?${params.toString()}`;
    };
 
    const navigate = useNavigate()

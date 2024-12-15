@@ -60,9 +60,6 @@ const Schools = () => {
       url: allDataUrl
     }, result => {
       callback(result.data.docs);
-    }, error => {
-      message.error('Failed to download data');
-      setDownloading(false);
     })
   }
 
