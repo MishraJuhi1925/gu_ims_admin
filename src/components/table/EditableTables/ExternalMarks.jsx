@@ -146,55 +146,26 @@ const ExternalMarks = ({ data, setData }) => {
                         <div className={classes.grid_td}>{element.reference}</div>
                         <div className={classes.grid_td}>{element.courseCode}</div>
                         <div className={classes.grid_td}>
-                            <Form.Item
-                                style={{ marginBottom: 0 }}
-                                name={`input_${element.id}_externalPracticalMarks`}
-                                rules={[
-                                    { required: true, message: 'Required' },
-                                    { validator: validateMarks }
-                                ]}
-                            >
-                                <Input
-                                    required
-                                    ref={el => inputRefs.current[index] = el}
-                                    type="text"
-                                    maxLength={2}
-                                    value={element.externalPracticalMarks}
-                                    onChange={(e) => handleInputChange(e.target.value, element.id)}
-                                    onKeyPress={(e) => handleKeyPress(e, element.id, 'externalPracticalMarks', index)}
-
-                                />
-                            </Form.Item>
+                           {element.externalMarks}
                         </div>
                         <div className={classes.grid_td}>{element.valueName}</div>
                         {/* <div className={classes.grid_td}>{element.overallTotalMarks}</div> */}
                         <div className={classes.grid_td}>
-                            <Form.Item
-                                style={{ marginBottom: 0 }}
-                                name={`input_${element.id}_remark`}
-                                rules={[
-                                    {
-                                        required: element.internalTheoryMarks === '0',
-                                        message: 'Remarks required for zero marks',
-                                    },
-                                ]}
-                            >
-                                <Input
-                                    type="text"
-                                    onChange={(e) => handleRemarksChange(e, element.id)}
-                                    onPressEnter={() => handleRemarksSubmit(element.id)}
-
-                                />
-                            </Form.Item>
+                            {element.remark}
                         </div>
                         <div className={classes.grid_td}>
-                            {/* <Space>
-                        {
-                                    <Button type='default' shape="circle" onClick={() => formLogic(element.id, 'externalPracticalMarks', index)}><FaCheck color={element.marksUpdated==='updated' ? 'color(srgb 0.7203 0.9194 0.5613)':'color(srgb 0.8705 0.8706 0.8707)'} size={16} /></Button>
-                                }
-                            </Space> */}
-                            <span style={{ color: element.marksUpdated === 'updated' ? 'green' : element.marksUpdated === 'modified' ? 'orange' : element.marksUpdated === 'not updated' ? 'gray' : 'black' }}> {element.marksUpdated} </span>
-                        </div>
+                        <Space>
+        {element.marksUpdated === 'updated' ? <Tag color="green">
+          Marks Updated
+        </Tag> : element.marksUpdated === 'modified' ? <Tag color="blue">
+          Modified
+        </Tag> : <Tag color="yellow">
+          Pending
+        </Tag>
+          
+        }
+      </Space>
+                           </div>
                     </React.Fragment>
                 ))}
             </div>

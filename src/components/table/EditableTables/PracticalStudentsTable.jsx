@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Input, Form, Button, Space, Tooltip } from 'antd';
+import { Input, Form, Button, Space, Tooltip, Tag } from 'antd';
 import { FaCheck } from 'react-icons/fa';
 import classes from './PracticalStudentsTable.module.css';
 import { toast } from 'react-toastify';
@@ -173,79 +173,29 @@ const PracticalStudentsTable = ({ data, setData }) => {
                         <div className={classes.grid_td}>{element.reference}</div>
                         <div className={classes.grid_td}>{element.courseCode}</div>
                         <div className={classes.grid_td}>
-                            <Form.Item
-                                style={{ marginBottom: 0 }}
-                                name={`input_${element.id}_externalPracticalMarks`}
-                                rules={[
-                                    { required: true, message: 'Required' },
-                                    { validator: validateMarks }
-                                ]}
-                            >
-                                <Input
-                                    required
-                                    ref={(el) => (inputRefs.current[index * 2] = el)}
-                                    type="text"
-                                    maxLength={2}
-                                    value={element.externalPracticalMarks || ''}
-                                    onChange={(e) => handleInputChange(e.target.value, element.id, 'externalPracticalMarks')}
-                                    onKeyPress={(e) => handleKeyPress(e, element.id, [`input_${element.id}_externalPracticalMarks`, `input_${element.id}_internalPracticalMarks`], index , 'externalPracticalMarks')}
-                                />
-                            </Form.Item>
+                           {element.externalTheoryMarks}
                         </div>
                         <div className={classes.grid_td}>
-                            <Form.Item
-                                style={{ marginBottom: 0 }}
-                                name={`input_${element.id}_internalPracticalMarks`}
-                                rules={[
-                                    { required: true, message: 'Required' },
-                                    { validator: validateMarks }
-                                ]}
-                            >
-                                <Input
-                                required
-                                    ref={(el) => (inputRefs.current[index * 2 + 1] = el)}
-                                    type="text"
-                                    maxLength={2}
-                                    value={element.internalPracticalMarks || ''}
-                                    onChange={(e) => handleInputChange(e.target.value, element.id, 'internalPracticalMarks')}
-                                    onKeyPress={(e) => handleKeyPress(e, element.id, [`input_${element.id}_externalPracticalMarks`, `input_${element.id}_internalPracticalMarks`], index,'internalPracticalMarks')}
-                                
-                                />
-                            </Form.Item>
+                           {element.internalTheoryMarks}
                         </div>
                         <div className={classes.grid_td}>{element.valueName}</div>
                         {/* <div className={classes.grid_td}>{element.overallTotalMarks}</div> */}
                         <div className={classes.grid_td}>
-                            <Form.Item
-                            style={{ marginBottom: 0 }}
-                            name={`input_${element.id}_remark`}
-                            rules={[
-                                {
-                                    required: element.internalTheoryMarks === '0',
-                                    message: 'Remarks required for zero marks',
-                                },
-                            ]}
-                        >
-                            <Input
-                                type="text"
-                                onChange={(e) => handleRemarksChange(e, element.id)} 
-                                onPressEnter={() => handleRemarksSubmit(element.id)}
-                                
-                            />
-                        </Form.Item>
+                            {element.remark}
                         </div>
                         <div className={classes.grid_td}>
-                            {/* <Space>
-                                <Button
-                                    type="default"
-                                    shape="circle"
-                                    onClick={() => formLogic(element.id, [`input_${element.id}_externalPracticalMarks`, `input_${element.id}_internalPracticalMarks`], index)}
-                                >
-                                    <FaCheck color={element.marksUpdated === 'updated' ? '#b8eb8e' : '#dedede'} size={16} />
-                                </Button>
-                            </Space> */}
-                            <span style={{ color: element.marksUpdated === 'updated' ? 'green' : element.marksUpdated === 'modified' ? 'orange' : element.marksUpdated === 'not updated' ? 'gray' : 'black' }}> {element.marksUpdated} </span>
-                        </div>
+                        <Space>
+        {element.marksUpdated === 'updated' ? <Tag color="green">
+          Marks Updated
+        </Tag> : element.marksUpdated === 'modified' ? <Tag color="blue">
+          Modified
+        </Tag> : <Tag color="yellow">
+          Pending
+        </Tag>
+          
+        }
+      </Space>
+                            </div>
                     </React.Fragment>
                 ))}
             </div>

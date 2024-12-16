@@ -47,37 +47,21 @@ const SelectsFilter = ({ queryObject, setQueryObject, handleClear }) => {
     const handleSelect = (key, value) => {
         setQueryObject(prev => ({ ...prev, [key]: value }))
     }
-
+    
     return (
-        <div className={classes.flex}>
-
-            <div className={classes.inner_flex}>
-                <Select
-                    className={classes.select}
-                    onSelect={(value) => handleSelect('marksUpdated', value)}
-                    placeholder='Marks Status'
-                    value={queryObject.marksUpdated}
-                    options={[
-                        {value:'', label:'Marks Status'},
-                        { value: 'updated', label: 'Updated' },
-                        { value: 'not updated', label: 'Not Updated' },
-                    ]}
-                />
-                <Select
-                    className={classes.select}
-                    onSelect={(value) => handleSelect('valueName', value)}
-                    placeholder='Subject Type'
-                    value={queryObject.valueName}
-                    options={[
-                        { value: 'Theory', label: 'Theory' },
-                        { value: 'Practical', label: 'Practical' },
-                    ]}
-                />
-
-            </div>
-
-            <div className={classes.inner_flex}>
-                <Select
+        <div className={classes.grid}>
+            <Select
+                className={classes.select}
+                showSearch
+                filterOption={false}
+                onSelect={(value) => handleSelect('programName', value)}
+                onSearch={getPrograms}
+                placeholder='Select program'
+                value={queryObject.programName}
+                options={[{value:'', label:'Select Program'},...programs]}
+                notFoundContent={courseLoading ? <Spin size="small" /> : null}
+            />
+             <Select
                     className={classes.select}
                     showSearch
                     filterOption={false}
@@ -88,7 +72,7 @@ const SelectsFilter = ({ queryObject, setQueryObject, handleClear }) => {
                     options={[{value:'',label:'Select Course'},...courses]}
                     notFoundContent={courseLoading ? <Spin size="small" /> : null}
                 />
-                <Select
+                 <Select
                     className={classes.select}
                     onSelect={(value) => handleSelect('semester', value)}
                     placeholder='Select Semester'
@@ -105,16 +89,30 @@ const SelectsFilter = ({ queryObject, setQueryObject, handleClear }) => {
                 />
                 <Select
                     className={classes.select}
-                    showSearch
-                    filterOption={false}
-                    onSelect={(value) => handleSelect('programName', value)}
-                    onSearch={getPrograms}
-                    placeholder='Select program'
-                    value={queryObject.programName}
-                    options={[{value:'', label:'Select Program'},...programs]}
-                    notFoundContent={courseLoading ? <Spin size="small" /> : null}
+                    onSelect={(value) => handleSelect('marksUpdated', value)}
+                    placeholder='Marks Status'
+                    value={queryObject.marksUpdated}
+                    options={[
+                        {value:'', label:'Marks Status'},
+                        { value: 'updated', label: 'Updated' },
+                        { value: 'modified', label: 'Modified' },
+                        { value: 'not updated', label: 'Pending' },
+                    ]}
+                    />
+                <Select
+                    className={classes.select}
+                    onSelect={(value) => handleSelect('valueName', value)}
+                    placeholder='Subject Type'
+                    value={queryObject.valueName}
+                    options={[
+                        {value:'', label:'Subject Type'},
+                        { value: 'Theory', label: 'Theory' },
+                        { value: 'Practical', label: 'Practical' },
+                        { value: 'Practical (only external)', label: 'Practical (only external)' },
+                    ]}
                 />
-            </div>
+               
+               
         </div>
     )
 }
