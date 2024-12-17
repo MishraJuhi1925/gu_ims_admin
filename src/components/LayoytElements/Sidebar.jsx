@@ -34,7 +34,7 @@ function Sidebar({ sidebar, handleSidebar }) {
         {
             key: '03',
             icon: <PiStudent size={14} />,
-            label: 'Update Marks',
+            label: 'Update Status',
             link: '/update-students'
         },
     ]

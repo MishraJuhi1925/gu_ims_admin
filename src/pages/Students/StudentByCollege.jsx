@@ -12,7 +12,7 @@ import { Button, Space } from 'antd'
 import Cookies from 'js-cookie'
 import SearchAndFilter from '../../components/filter/SearchAndFilter'
 import SelectsFilter from '../../components/filter/SelectsFilter'
-
+import * as XLSX from 'xlsx'
 const StudentByCollege = () => {
 
   // const token = JSON.parse(Cookies.get('admin') ?? {})?.token
@@ -27,6 +27,7 @@ const StudentByCollege = () => {
   // For Filter
   const [date, setDate] = useState('')
   const [query, setQuery] = useState('')
+  const [downloading, setDownloading] = useState(false)
 
   const [queryObject,setQueryObject]=useState({
     marksUpdated:'',
@@ -35,6 +36,51 @@ const StudentByCollege = () => {
     valueName:'',
 
   })
+
+  const getAllFilteredData = (callback) => {
+    const allDataUrl = constructUrl(pageDetails.totalDocs || 1000, 1, query, queryObject);
+    
+    sendRequest({
+      url: allDataUrl
+    }, result => {
+      callback(result.data.docs);
+    })
+  }
+
+  const handleDownloadCSV = () => {
+    setDownloading(true);
+    getAllFilteredData((allData) => {
+      const csvData = allData.map(item => ({
+        'Exam Roll Number': item.examRollNumber,
+        'Civil ID': item.civilId,
+        'Semester': item.semester,
+        'College Name': item.collegeName,
+        'Program Name': item.programName,
+        'Course Name': item.courseName,
+        'Course ID': item.courseId,
+        'Reference': item.reference,
+        'Course Code': item.courseCode,
+        'Value Name': item.valueName,
+        'Internal Theory Marks': item.internalTheoryMarks || '--',
+        'Internal Practical Marks': item.internalPracticalMarks || '--',
+        'External Practical Marks': item.externalPracticalMarks || '--',
+        'Examiner Name': item.examinerName || '--',
+        'Examiner Contact': item.contact || '--',
+        'Examiner organization': item.organization || '--',
+        'Internal ExaminerName': item.internalExaminerName || '--',
+        
+      }));
+
+    
+      
+      const worksheet = XLSX.utils.json_to_sheet(csvData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+      XLSX.writeFile(workbook, `Students_${collegeName}_${new Date().toISOString().split('T')[0]}.xlsx`);
+      
+      setDownloading(false);
+    });
+  }
 
   const filterProps = {
     query,
@@ -89,10 +135,10 @@ const StudentByCollege = () => {
     getData()
   }, [limit, page, query , queryObject])
 
-  useEffect(() => {
-    setPage(1)
-  }, [query])
-
+   useEffect(() => {
+      setPage(1)
+    }, [query,queryObject])
+   
   const columns = studentColumn()
 
   const handleClear = () => {
@@ -114,14 +160,23 @@ const StudentByCollege = () => {
           rowGap: 25
         }}
       >
-        <PageHeader heading={'Students List'} >
+        
+        <PageHeader heading={decodeURIComponent(collegeName)} >
           <Space>
           <Button onClick={handleClear} style={{height:35,width:100}} type='default'>
                Clear Filter
              </Button>
+             <Button 
+               onClick={handleDownloadCSV} 
+               icon={<FaDownload />} 
+               type='primary'
+               loading={downloading}
+             >
+               Export CSV
+             </Button>
           </Space>
         </PageHeader>
-        <SelectsFilter setQueryObject={setQueryObject} queryObject={queryObject} />
+        <SelectsFilter collegeRequired={false} setQueryObject={setQueryObject} queryObject={queryObject} />
         <SearchBar func={setQuery} value={query} placeholder={'Search by  exam roll no. , course code , course id , '} />
         <h4 style={{ color: 'var(--color_black_2)', fontWeight: '500' }}>
           {pageDetails?.totalDocs ?? 0} Results</h4>

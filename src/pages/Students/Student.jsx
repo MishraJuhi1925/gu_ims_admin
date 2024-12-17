@@ -31,7 +31,7 @@ const Students = () => {
    const [queryObject, setQueryObject] = useState({
     semester: '',
     courseName: '',
-    programName: '',
+    collegeName:'',    programName: '',
     marksUpdated: '',
     valueName: 'Theory'
   })
@@ -46,6 +46,9 @@ const Students = () => {
 
    const constructUrl = (limit, page, query, queryObject) => {
      const params = new URLSearchParams({ limit, page, search: query });
+     if (queryObject.collegeName) {
+       params.append('collegeName', queryObject.collegeName);
+     }
      if (queryObject.courseName) {
        params.append('courseName', queryObject.courseName);
      }
@@ -75,18 +78,19 @@ const Students = () => {
      })
    }
    const getAllFilteredData = (callback) => {
-     const allDataUrl = constructUrl(pageDetails.totalDocs || 1000, 1, query, queryObject);
-     
-     sendRequest({
-       url: allDataUrl
-     }, result => {
-       callback(result.data.docs);
-     }, error => {
-       message.error('Failed to download data');
-       setDownloading(false);
-     })
-   }
-
+    const allDataUrl = constructUrl(pageDetails.totalDocs || 1000, 1, query, queryObject);
+    
+    sendRequest({
+      url: allDataUrl
+    }, result => {
+      callback(result.data.docs.map(item => ({
+        ...item,
+        marksStatus: item.marksUpdated === 'updated' ? 'Updated' 
+          : item.marksUpdated === 'modified' ? 'Modified'
+          : 'Pending'
+      })));
+    })
+  }
    useEffect(() => {
      getData()
    }, [limit, page, query, queryObject])
@@ -109,7 +113,8 @@ const Students = () => {
       courseName: '',
       programName: '',
       marksUpdated: '',
-      valueName: 'Theory'
+      valueName: 'Theory',
+      collegeName:''
     })
   }
 
@@ -127,7 +132,7 @@ const Students = () => {
         item.internalTheoryMarks,
         item.externalPracticalMarks,
         item.overallTotalMarks,
-        item.marksUpdated === 'updated' ? 'Updated' : 'Pending'
+        item.marksStatus
       ]);
       doc.autoTable({
         startY: 30,
@@ -176,7 +181,7 @@ const Students = () => {
          'Internal Theory Total Marks': item.internalTheoryTotalMarks,
          'Value Name': item.valueName,
          'Overall Total Marks': item.overallTotalMarks,
-         'Marks Updated Status': item.marksUpdated === 'updated' ? 'Updated' : 'Pending'
+         'Marks Updated Status':  item.marksStatus
        }));
        const worksheet = XLSX.utils.json_to_sheet(excelData);
        const workbook = XLSX.utils.book_new();

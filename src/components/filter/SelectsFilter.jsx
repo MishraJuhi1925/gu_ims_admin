@@ -3,14 +3,29 @@ import classes from './SelectsFilter.module.css';
 import { Button, Select, Spin } from 'antd';
 import useHttp2 from '../../hooks/useHttp2';
 
-const SelectsFilter = ({ queryObject, setQueryObject, handleClear }) => {
+const SelectsFilter = ({ queryObject, setQueryObject, handleClear , collegeRequired=true }) => {
 
     const [courses, setCourses] = useState([])
     const [programs, setPrograms] = useState([])
+    const [colleges, setCollege] = useState([])
 
     const { sendRequest: reqProgram, isLoading: programLoading } = useHttp2()
     const { sendRequest: reqCourse, isLoading: courseLoading } = useHttp2()
+    const { sendRequest: reqCollege, isLoading: collegeLoading } = useHttp2()
 
+    const getCollege = key => {
+        reqCollege({
+            url: `college?limit=50&page=1&search=${key ? key : ''}`
+        }, result => {
+
+            let arr = result.data.docs.map(element => ({
+                value: element.name,
+                label: element.name
+            }))
+
+            setCollege(arr)
+        })
+    }
     const getCourses = key => {
         reqCourse({
             url: `course?limit=50&page=1&search=${key ? key : ''}`
@@ -41,6 +56,7 @@ const SelectsFilter = ({ queryObject, setQueryObject, handleClear }) => {
     useEffect(() => {
         getCourses()
         getPrograms()
+        getCollege()
     }, [])
 
 
@@ -50,6 +66,18 @@ const SelectsFilter = ({ queryObject, setQueryObject, handleClear }) => {
     
     return (
         <div className={classes.grid}>
+            {collegeRequired && 
+            <Select
+                className={classes.select}
+                showSearch
+                filterOption={false}
+                onSelect={(value) => handleSelect('collegeName', value)}
+                onSearch={getCollege}
+                placeholder='Select College'
+                value={queryObject.collegeName}
+                options={[{value:'', label:'Select College'},...colleges]}
+                notFoundContent={collegeLoading ? <Spin size="small" /> : null}
+            />}
             <Select
                 className={classes.select}
                 showSearch
