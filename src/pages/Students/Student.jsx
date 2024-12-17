@@ -131,12 +131,12 @@ const Students = () => {
         item.courseName,
         item.internalTheoryMarks,
         item.externalPracticalMarks,
-        item.overallTotalMarks,
+        item.internalPracticalMarks,
         item.marksStatus
       ]);
       doc.autoTable({
         startY: 30,
-        head: [['Exam Roll', 'Program', 'Course', 'Int Theory Marks', 'Ext Practical Marks', 'Total Marks', 'Status']],
+        head: [['Exam Roll', 'Program', 'Course', 'Int Theory Marks', 'Ext Practical Marks','Int Practical Marks', 'Status']],
         body: tableData,
         theme: 'striped',
         styles: { 

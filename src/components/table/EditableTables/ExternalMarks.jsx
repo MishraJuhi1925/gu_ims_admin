@@ -146,7 +146,7 @@ const ExternalMarks = ({ data, setData }) => {
                         <div className={classes.grid_td}>{element.reference}</div>
                         <div className={classes.grid_td}>{element.courseCode}</div>
                         <div className={classes.grid_td}>
-                           {element.externalMarks}
+                           {element.externalPracticalMarks}
                         </div>
                         <div className={classes.grid_td}>{element.valueName}</div>
                         {/* <div className={classes.grid_td}>{element.overallTotalMarks}</div> */}

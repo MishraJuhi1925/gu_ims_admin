@@ -151,7 +151,7 @@ const PracticalStudentsTable = ({ data, setData }) => {
                 <div className={classes.grid_th}>External Practical Marks</div>
                 <div className={classes.grid_th}>Internal Practical Marks</div>
                 <div className={classes.grid_th}>Value Name</div>
-                <div className={classes.grid_th}>Overall Total Marks</div>
+                <div className={classes.grid_th}>Remark</div>
                 <div className={classes.grid_th}>Status</div>
 
                 {data.map((element, index) => (
@@ -173,10 +173,10 @@ const PracticalStudentsTable = ({ data, setData }) => {
                         <div className={classes.grid_td}>{element.reference}</div>
                         <div className={classes.grid_td}>{element.courseCode}</div>
                         <div className={classes.grid_td}>
-                           {element.externalTheoryMarks}
+                           {element.externalPracticalMarks}
                         </div>
                         <div className={classes.grid_td}>
-                           {element.internalTheoryMarks}
+                           {element.internalPracticalMarks}
                         </div>
                         <div className={classes.grid_td}>{element.valueName}</div>
                         {/* <div className={classes.grid_td}>{element.overallTotalMarks}</div> */}

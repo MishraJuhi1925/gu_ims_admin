@@ -126,8 +126,8 @@ const SpecialFilter = ({ queryObject, setQueryObject, handleClear }) => {
                     options={[
                         { value: '', label: 'Subject Type' },
                         { value: 'Theory', label: 'Theory' },
-                        { value: 'Practical(only external)', label: 'Practical(only external)' },
                         { value: 'Practical', label: 'Practical' },
+                        { value: 'Practical (only external)', label: 'Practical (only external)' },
                     ]}
                 />
                 

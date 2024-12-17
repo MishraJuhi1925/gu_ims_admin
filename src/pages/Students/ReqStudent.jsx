@@ -31,7 +31,6 @@ const ReqStudent = () => {
     programName: '',
     marksUpdated: '',
     valueName: '',
-    specialCase: 'Only External',
     filter: false
   })
 
@@ -112,7 +111,7 @@ const ReqStudent = () => {
         body: { marksUpdated: 'modified' }
     }, result => {
        getData()
-    });
+    },true);
 };
 
 
@@ -179,7 +178,9 @@ const ReqStudent = () => {
               {pageDetails?.totalDocs ?? 0} Results
             </h4>
             {renderComp[queryObject.valueName]}
-            <Button onClick={updatestatus} htmlType='button' type='primary' style={{width:'100%'}} >Change Status of Filtered Students</Button>
+            <Button 
+            disabled={isLoading || data.length <= 0}
+            onClick={updatestatus} htmlType='button' type='primary' style={{width:'100%'}} >Update Status</Button>
             <MyPagination {...paginationObject} />
           </>
         ) : (
