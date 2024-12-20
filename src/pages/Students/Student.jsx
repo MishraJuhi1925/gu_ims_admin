@@ -118,46 +118,134 @@ const Students = () => {
     })
   }
 
+  // const handleDownloadPDF = () => {
+  //   setDownloading(true);
+  //   setDownloadType('pdf');
+  //   getAllFilteredData((allData) => {
+  //     const doc = new jsPDF('landscape');
+  //     doc.setFontSize(18);
+  //     doc.text('Students List', 14, 22);
+  //     const tableData = allData.map(item => [
+  //       item.examRollNumber,
+  //       item.programName,
+  //       item.courseName,
+  //       item.internalTheoryMarks,
+  //       item.externalPracticalMarks,
+  //       item.internalPracticalMarks,
+  //       item.marksStatus
+  //     ]);
+  //     doc.autoTable({
+  //       startY: 30,
+  //       head: [['Exam Roll', 'Program', 'Course', 'Int Theory Marks', 'Ext Practical Marks','Int Practical Marks', 'Status']],
+  //       body: tableData,
+  //       theme: 'striped',
+  //       styles: { 
+  //         fontSize: 8,
+  //         cellPadding: 2 
+  //       },
+  //       columnStyles: { 
+  //         0: { cellWidth: 30 },
+  //         1: { cellWidth: 40 },
+  //         2: { cellWidth: 40 },
+  //         3: { cellWidth: 30 },
+  //         4: { cellWidth: 30 },
+  //         5: { cellWidth: 30 },
+  //         6: { cellWidth: 30 }
+  //       }
+  //     });
+ 
+  //     doc.save(`Students_${new Date().toISOString().split('T')[0]}.pdf`);
+      
+  //     setDownloading(false);
+  //     setDownloadType(null);
+  //   });
+  // }
   const handleDownloadPDF = () => {
     setDownloading(true);
-    setDownloadType('pdf');
     getAllFilteredData((allData) => {
       const doc = new jsPDF('landscape');
       doc.setFontSize(18);
       doc.text('Students List', 14, 22);
-      const tableData = allData.map(item => [
-        item.examRollNumber,
-        item.programName,
-        item.courseName,
-        item.internalTheoryMarks,
-        item.externalPracticalMarks,
-        item.internalPracticalMarks,
-        item.marksStatus
-      ]);
-      doc.autoTable({
-        startY: 30,
-        head: [['Exam Roll', 'Program', 'Course', 'Int Theory Marks', 'Ext Practical Marks','Int Practical Marks', 'Status']],
-        body: tableData,
-        theme: 'striped',
-        styles: { 
-          fontSize: 8,
-          cellPadding: 2 
-        },
-        columnStyles: { 
-          0: { cellWidth: 30 },
-          1: { cellWidth: 40 },
-          2: { cellWidth: 40 },
-          3: { cellWidth: 30 },
-          4: { cellWidth: 30 },
-          5: { cellWidth: 30 },
-          6: { cellWidth: 30 }
-        }
-      });
+
+      // Conditional column setup based on valueName
+      if (queryObject.valueName === 'Theory') {
+        const tableData = allData.map(item => [
+          item.examRollNumber,
+          item.programName,
+          item.courseName,
+          item.internalTheoryMarks,
+          item.externalPracticalMarks,
+          item.internalPracticalMarks,
+          item.valueName,
+          item.marksStatus
+        ]);
+
+        doc.autoTable({
+          startY: 30,
+          head: [['Exam Roll', 'Program', 'Course', 'Int Theory Marks','Ext Practical Marks', 'Int Practical Marks','Subject Type' ,'Status']],
+          body: tableData,
+          theme: 'striped',
+          styles: { 
+            fontSize: 8,
+            cellPadding: 2 
+          },
+          columnStyles: { 
+            0: { cellWidth: 20 },
+            1: { cellWidth: 40 },
+            2: { cellWidth: 40 },
+            3: { cellWidth: 20 },
+            4: { cellWidth: 20 },
+            5: { cellWidth: 20 },
+            6: { cellWidth: 20 }
+          }
+        });
+      } else {
+        const tableData = allData.map(item => [
+          item.examRollNumber,
+          item.programName,
+          item.courseName,
+          item.internalTheoryMarks,
+          item.internalPracticalMarks,
+          item.externalPracticalMarks,
+          item.valueName,
+          item.examinerName || 'N/A',
+          item.contact || 'N/A',
+          item.organization || 'N/A',
+          item.internalExaminerName || 'N/A',
+          item.marksStatus
+        ]);
+
+        doc.autoTable({
+          startY: 30,
+          head: [
+            ['Exam Roll', 'Program', 'Course','Int Theory Marks' ,'Int Practical Marks', 'Ext Practical Marks','Subject Type',
+            'External Examiner', 'Contact', 'Organization', 'Internal Examiner', 'Status']
+          ],
+          body: tableData,
+          theme: 'striped',
+          styles: { 
+            fontSize: 8,
+            cellPadding: 2 
+          },
+          columnStyles: { 
+            0: { cellWidth: 15 },
+            1: { cellWidth: 30 },
+            2: { cellWidth: 30 },
+            3: { cellWidth: 10 },
+            4: { cellWidth: 10 },
+            5: { cellWidth: 10 },
+            6: { cellWidth: 20 },
+            7: { cellWidth: 20 },
+            8: { cellWidth: 35 },
+            9: { cellWidth: 35 },
+            10: { cellWidth: 25 }
+          }
+        });
+      }
  
-      doc.save(`Students_${new Date().toISOString().split('T')[0]}.pdf`);
+      doc.save(`Students_${queryObject.valueName}_${new Date().toISOString().split('T')[0]}.pdf`);
       
       setDownloading(false);
-      setDownloadType(null);
     });
   }
 
@@ -181,7 +269,11 @@ const Students = () => {
          'Internal Theory Total Marks': item.internalTheoryTotalMarks,
          'Value Name': item.valueName,
          'Overall Total Marks': item.overallTotalMarks,
-         'Marks Updated Status':  item.marksStatus
+         'Marks Updated Status':  item.marksStatus,
+         'Examiner Name': item.examinerName || '--',
+        'Examiner Contact': item.contact || '--',
+        'Examiner organization': item.organization || '--',
+        'Internal ExaminerName': item.internalExaminerName || '--',
        }));
        const worksheet = XLSX.utils.json_to_sheet(excelData);
        const workbook = XLSX.utils.book_new();
