@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Input, message, Popconfirm, Space, Switch, Tag, Tooltip } from "antd";
+import { Button,Typography, Flex, Image, Input, message, Popconfirm, Space, Switch, Tag, Tooltip } from "antd";
 import GeneralTableCard from "../components/cards/GeneralTableCard";
 import classes from './Columns.module.css'
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -8,7 +8,7 @@ import moment from "moment";
 import { CiEdit } from "react-icons/ci";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { BASE_API } from "./BASE_URL";
-
+const {Text} = Typography
 const confirm = (e) => {
   message.success('Click on Yes');
 };
@@ -20,6 +20,7 @@ const handleCopy = (value) => {
   navigator.clipboard.writeText(value)
   message.success('Link Copied');
 };
+
 
 
 
@@ -785,7 +786,10 @@ export const studentColumn = () => ([
     },
     render: (programName) => (
       <Tooltip placement="topLeft" title={programName}>
-        {programName}
+      <Text onClick={()=>handleCopy(programName)}>
+      {programName}
+      </Text>
+       
       </Tooltip>
     ),
     width: 300
@@ -800,7 +804,9 @@ export const studentColumn = () => ([
     },
     render: (courseName) => (
       <Tooltip placement="topLeft" title={courseName}>
+        <Text onClick={()=>handleCopy(courseName)}>
         {courseName}
+        </Text>
       </Tooltip>
     ),
     width: 300

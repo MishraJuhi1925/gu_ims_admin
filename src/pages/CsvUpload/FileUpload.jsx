@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, message, Button, Row, Col } from 'antd';
-import { InboxOutlined, DeleteOutlined } from '@ant-design/icons';
+import { InboxOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import useHttp2 from '../../hooks/useHttp2';
 import PropTypes from 'prop-types';
 import useHttpForm from '../../hooks/useHttpForm';
@@ -11,6 +11,17 @@ const { Dragger } = Upload;
 const FileUpload = ({ url, onUploadSuccess }) => {
   const { sendRequest, isLoading } = useHttpForm();
   const [fileList, setFileList] = useState([]);
+
+  const handleDownloadSample = () => {
+    const sampleFileUrl = '/upload/gurugram.xlsx'; 
+    const link = document.createElement('a');
+    link.href = sampleFileUrl;
+    link.download = 'SampleFile.xlsx'; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    message.info('Sample file is being downloaded.');
+  };
 
   const handleUpload =  () => {
     const formData = new FormData();
@@ -76,6 +87,14 @@ const FileUpload = ({ url, onUploadSuccess }) => {
         {isLoading ? 'Loading' : ' Upload CSV File'
         }
        </Button>
+       <Button
+        style={{ width: '100%', height: 50, marginTop: 10 }}
+        type="primary"
+        icon={<DownloadOutlined />}
+        onClick={handleDownloadSample}
+      >
+        Download Sample File
+      </Button>
 {/* 
       <Row gutter={[16, 16]} justify="center">
         {fileList.map((file) => (
