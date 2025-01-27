@@ -127,18 +127,18 @@ const Schools = () => {
     });
   }
 
-  const getData1 = () => {
-    sendRequest({
-      url: constructUrl(limit, page, query, queryObject)
-    }, result => {
-      setData1(result.data.docs)
-      setPageDetails({ ...result.data, docs: [] })
-    })
-  }
+  // const getData1 = () => {
+  //   sendRequest({
+  //     url: constructUrl(limit, page, query, queryObject)
+  //   }, result => {
+  //     setData1(result.data.docs)
+  //     setPageDetails({ ...result.data, docs: [] })
+  //   })
+  // }
 
-  useEffect(() => {
-    getData1()
-  }, [limit, page, query, queryObject])
+  // useEffect(() => {
+  //   getData1()
+  // }, [limit, page, query, queryObject])
 
   const paginationObject = {
     pageDetails,
@@ -167,7 +167,7 @@ const Schools = () => {
   }
 
   useEffect(() => {
-    getData1()
+    // getData1()
     getData()
   }, [limit, page, query, queryObject, date])
 
