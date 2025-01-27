@@ -84,7 +84,7 @@ const FileUpload = ({ url, onUploadSuccess }) => {
       </Dragger>
 
       <Button style={{width:'100%',height:50,marginTop:30}} disabled={isLoading} htmlType='button' type='default' onClick={handleUpload}>
-        {isLoading ? 'Loading' : ' Upload CSV File'
+        {isLoading ? 'Loading' : ' Upload Excel File'
         }
        </Button>
        <Button

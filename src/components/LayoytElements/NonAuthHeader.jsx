@@ -15,14 +15,14 @@ const NonAuthHeader = () => {
                 <h1 className={classes.logo} src='/board.png' alt="" >University Logo</h1>
                 <nav className={classes.header_nav}>
                     <>
-                        <Button
+                        {/* <Button
                             className={classes.header_nav_btn}
                             type='link'
                             href='https://biharsanskritboard.netlify.app/'
                             // icon={<CiUser className={classes.icon} />}
                         >
                             Visit Website
-                        </Button>
+                        </Button> */}
                         {/* <Button
                             className={classes.header_nav_btn}
                             type='link'

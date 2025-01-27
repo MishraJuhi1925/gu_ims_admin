@@ -71,8 +71,7 @@ const Header = ({ handleSidebar }) => {
             {countdownData && (
             <div style={{ fontSize: '16px', color: 'red' }}>
               <p>
-                Remaning Tiem: {countdownData.countdown} 
-                {/* Target Date: {countdownData.targetDate} ({countdownData.targetDay}) */}
+                Remaning Time: {countdownData.countdown}
               </p>
             </div>
           )}
