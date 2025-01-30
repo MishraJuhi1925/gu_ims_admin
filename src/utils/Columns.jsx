@@ -771,7 +771,9 @@ export const studentColumn = () => ([
     },
     render: (collegeName) => (
       <Tooltip placement="topLeft" title={collegeName}>
+        <Text onClick={()=>handleCopy(collegeName)}>
         {collegeName}
+        </Text>
       </Tooltip>
     ),
     width: 300

@@ -13,10 +13,10 @@ const FileUpload = ({ url, onUploadSuccess }) => {
   const [fileList, setFileList] = useState([]);
 
   const handleDownloadSample = () => {
-    const sampleFileUrl = '/upload/gurugram.xlsx'; 
+    const sampleFileUrl = '/upload/demoData.csv'; 
     const link = document.createElement('a');
     link.href = sampleFileUrl;
-    link.download = 'SampleFile.xlsx'; 
+    link.download = 'SampleFile.csv'; 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -56,6 +56,7 @@ const FileUpload = ({ url, onUploadSuccess }) => {
     },
     fileList,
     multiple: false,
+    onRemove: (file) => handleRemove(file),
   };
 
   return (
@@ -84,7 +85,7 @@ const FileUpload = ({ url, onUploadSuccess }) => {
       </Dragger>
 
       <Button style={{width:'100%',height:50,marginTop:30}} disabled={isLoading} htmlType='button' type='default' onClick={handleUpload}>
-        {isLoading ? 'Loading' : ' Upload Excel File'
+        {isLoading ? 'Loading' : ' Upload CSV File'
         }
        </Button>
        <Button
@@ -95,35 +96,7 @@ const FileUpload = ({ url, onUploadSuccess }) => {
       >
         Download Sample File
       </Button>
-{/* 
-      <Row gutter={[16, 16]} justify="center">
-        {fileList.map((file) => (
-          <Col key={file.uid} span={6}>
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '10px',
-                border: '1px dashed #d9d9d9',
-                borderRadius: '8px',
-                background: '#fafafa',
-              }}
-            >
-              <p style={{ marginBottom: '10px', wordBreak: 'break-word' }}>
-                {file.name}
-              </p>
-              <Button
-                icon={<DeleteOutlined />}
-                type="danger"
-                size="small"
-                onClick={() => handleRemove(file)}
-                style={{ width: '100%' }}
-              >
-                Remove
-              </Button>
-            </div>
-          </Col>
-        ))}
-      </Row> */}
+
     </div>
   );
 };
